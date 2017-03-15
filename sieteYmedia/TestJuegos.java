@@ -47,7 +47,7 @@ public class TestJuegos {
 		
 		for (Jugador jugador : jugadores) {
 			System.out.println(jugador);
-		
+		}
 		}
 
 	/**
@@ -56,7 +56,13 @@ public class TestJuegos {
 	 */
 	private static void playRounds() throws MazoVacioException {
 		generateActualPlayers();
-		for (int i = 0; i < 3; i++) {
+		int rounds;
+		do {
+			rounds = Teclado
+					.leerEntero("por favor, indica numero de rondas");
+		} while (rounds<1);
+		partida=new Partida(participantes);
+		for (int i = 0; i <rounds ; i++) {
 			System.out.println("ronda " + (i + 1));
 			partida.ronda();
 		}
@@ -95,6 +101,7 @@ public class TestJuegos {
 				opcion = Teclado
 						.leerEntero("indica que jugadores van a participar en esta ronda (pulsa 0 o "
 								+ (jugadores.size() + 1) + " para salir)");
+				if(!participantes.contains(jugadores.get(opcion-1)))
 				participantes.add(jugadores.get(opcion - 1));
 			} while (opcion > 0 || opcion > jugadores.size());
 		} catch (RuntimeException e) {
