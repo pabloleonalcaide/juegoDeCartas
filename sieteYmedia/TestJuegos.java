@@ -95,7 +95,7 @@ public class TestJuegos {
 				participantes.add(jugadores.get(opcion - 1));
 			} while (opcion > 0 || opcion > jugadores.size());
 		} catch (RuntimeException e) {
-			System.out.println();
+			System.out.println(e.getMessage());
 		}
 		System.out.println(participantes.toString());
 	}
