@@ -43,8 +43,11 @@ public class TestJuegos {
 	 * muestra el ranking de jugadores
 	 */
 	private static void ranking() {
-		Ranking ranking = new Ranking(jugadores);	
-		System.out.println(ranking.toString());
+		Collections.sort(jugadores);
+		
+		for (Jugador jugador : jugadores) {
+			System.out.println(jugador);
+		
 		}
 
 	/**
