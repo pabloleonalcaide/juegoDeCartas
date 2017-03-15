@@ -17,11 +17,6 @@ public class Partida {
 		this.participantes = participantes;
 	}
 
-	public static Partida partidaNueva(ArrayList<Jugador> participantes) {
-		return new Partida(participantes);
-
-	}
-
 	/**
 	 * ejecuta cada ronda de la partida, comprobando quien gana en cada ronda,
 	 * al inicio de cada ronda se toma una nueva baraja, se mezcla y se van
