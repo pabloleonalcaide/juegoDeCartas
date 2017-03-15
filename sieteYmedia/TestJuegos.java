@@ -61,7 +61,6 @@ public class TestJuegos {
 			rounds = Teclado
 					.leerEntero("por favor, indica numero de rondas");
 		} while (rounds<1);
-		partida=new Partida(participantes);
 		for (int i = 0; i <rounds ; i++) {
 			System.out.println("ronda " + (i + 1));
 			partida.ronda();
@@ -87,7 +86,6 @@ public class TestJuegos {
 		for (int i = 0; i < totalJugadores; i++) {
 			jugadores.add(new Jugador("jugador" + (i + 1)));
 		}
-		partida = Partida.partidaNueva(participantes);
 	}
 
 	/**
@@ -105,9 +103,10 @@ public class TestJuegos {
 				participantes.add(jugadores.get(opcion - 1));
 			} while (opcion > 0 || opcion > jugadores.size());
 		} catch (RuntimeException e) {
-			System.out.println(e.getMessage());
+			System.out.println("saliendo");
 		}
 		System.out.println(participantes.toString());
+		partida = Partida.partidaNueva(participantes);
 	}
 
 	
