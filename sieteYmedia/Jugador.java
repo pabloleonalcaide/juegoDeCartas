@@ -1,6 +1,6 @@
 package sieteYmedia;
 
-public class Jugador {
+public class Jugador implements Comparable <Jugador> {
 	private String alias;
 	private double puntuacion;
 	private int partidasJugadas;
@@ -110,5 +110,8 @@ public class Jugador {
 		setPuntuacion(0);
 
 	}
-
+	public int compareTo(Jugador jugador) {
+		int comparepg = ((Jugador)jugador).getPartidasGanadas();
+		return comparepg-this.partidasGanadas;
+	}
 }
