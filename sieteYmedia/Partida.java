@@ -24,6 +24,7 @@ public class Partida {
 	 * @throws MazoVacioException 
 	 */
 	void ronda() throws MazoVacioException {
+		//cada vez que comienza la partida cogemos una baraja nueva y la barajamos
 		baraja = new Baraja();
 		Collections.shuffle(baraja.mazo);
 		int turno = 0;
@@ -100,6 +101,7 @@ public class Partida {
 			Carta carta = baraja.extractCard();
 			System.out.println("Ha salido " + carta.toString());
 			double valor = carta.getFigura().getValor();
+			//carta mostrada, carta que sacamos del mazo
 			baraja.pullOut();
 			return valor;
 		
