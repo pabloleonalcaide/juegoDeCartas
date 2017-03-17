@@ -5,17 +5,13 @@ public class Jugador implements Comparable <Jugador> {
 	private double puntuacion;
 	private int partidasJugadas;
 	private int partidasGanadas;
-	private int partidasPerdidas;
-
-	int getPartidasPerdidas() {
-		return partidasPerdidas;
-	}
-
-	void setPartidasPerdidas() {
-		this.partidasPerdidas = getPartidasJugadas() - getPartidasGanadas();
-		;
-	}
-
+	/*
+	 * Se me ocurre introducir la variable "saldo", para que los jugadores apuesten en cada ronda,
+	 * quien gane la ronda, se lleva la apuesta del resto de jugadores, de modo que los jugadores
+	 * no puedan participar si se quedan sin saldo.
+	 */
+	private int saldo=2000;
+	
 	public Jugador(String alias) {
 		setAlias(alias);
 	}
@@ -32,16 +28,7 @@ public class Jugador implements Comparable <Jugador> {
 		return puntuacion;
 	}
 
-	StringBuilder getPuntos() {
-		StringBuilder puntos = new StringBuilder("puntuacion: " + puntuacion);
-		if (getPuntuacion() == 7.5)
-			puntos.append(" ganaste!");
-		else if (getPuntuacion() > 7.5)
-			puntos.append(" has perdido");
-		return puntos;
-
-	}
-
+	
 	private void setPuntuacion(double puntuacion) {
 		this.puntuacion = puntuacion;
 	}
@@ -101,9 +88,8 @@ public class Jugador implements Comparable <Jugador> {
 
 	@Override
 	public String toString() {
-		return "\nJugador [alias=" + alias + ", partidasJugadas="
-				+ partidasJugadas + ", partidasGanadas=" + partidasGanadas
-				+ "partidasPerdidas " + getPartidasPerdidas() + "]";
+		return "\n Jugador alias=" + alias + ", partidasJugadas="
+				+ partidasJugadas + ", partidasGanadas=" + partidasGanadas;
 	}
 
 	void resetPoints() {
