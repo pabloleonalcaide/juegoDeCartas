@@ -1,2 +1,2 @@
 # juegoDeCartas
-spanish card game
+La rama principal aún tiene algunos errores, revisar rama correcciones.
