@@ -1,6 +1,7 @@
 package sieteYmedia;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Baraja {
 	ArrayList<Carta> mazo;
@@ -34,6 +35,10 @@ public class Baraja {
 	 */
 	void pullOut() {
 		mazo.remove(0);
+
+	}
+	public void shuffle() {
+		Collections.shuffle(mazo);
 
 	}
 
