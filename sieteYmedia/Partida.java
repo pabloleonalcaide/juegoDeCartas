@@ -13,7 +13,7 @@ public class Partida {
 	private ArrayList<Jugador> participantes;
 	private static final double SIETEYMEDIA = 7.5;
 
-	private Partida(ArrayList<Jugador> participantes) {
+	Partida(ArrayList<Jugador> participantes) {
 		this.participantes = participantes;
 	}
 
@@ -71,7 +71,7 @@ public class Partida {
 	private void play(Jugador jugador) throws MazoVacioException {
 		do {
 			jugador.sumarPuntuacion(takeCard());
-			// saca una carta del montón, acumula puntos y quita la carta
+			// saca una carta del montÃ³n, acumula puntos y quita la carta
 		} while (Teclado.deseaContinuar("desea otra carta? S - N")
 				&& checkPoints(jugador));
 
@@ -105,4 +105,6 @@ public class Partida {
 		
 	}
 
+
 }
+
