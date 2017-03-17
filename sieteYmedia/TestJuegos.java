@@ -18,6 +18,8 @@ public class TestJuegos {
 			"jugar", "mostrar ranking" });
 	
 	public static void main(String[] args) {
+		//los jugadores se definen al inicio del programa y se mantienen hasta el final
+		//en este caso no se ha dado opcion a introducir o eliminar jugadores.
 		generateAllPlayers();
 		do {
 			switch (menu.gestionar()) {
@@ -55,6 +57,7 @@ public class TestJuegos {
 	 * @throws MazoVacioException 
 	 */
 	private static void playRounds() throws MazoVacioException {
+		//al inicio de cada partida introducimos los participantes
 		generateActualPlayers();
 		int rounds;
 		do {
@@ -64,7 +67,7 @@ public class TestJuegos {
 		for (int i = 0; i <rounds ; i++) {
 			System.out.println("ronda " + (i + 1));
 			partida.ronda();
-		}
+		}//reasignamos el numero de partidas jugadas y ganadas
 		for (Jugador j : jugadores) {
 			for (Jugador p : participantes) {
 				if (j.equals(p)) {
@@ -72,7 +75,7 @@ public class TestJuegos {
 					j.setPartidasGanadas(p.getPartidasGanadas());
 				}
 			}
-		}
+		}//vaciamos la lista de participantes cuando termina la partida
 		participantes = null;
 	}
 
@@ -84,6 +87,7 @@ public class TestJuegos {
 		int totalJugadores = Teclado
 				.leerEntero("indica total de jugadores, recuerda que no tienen por que jugar todos a la vez");
 		for (int i = 0; i < totalJugadores; i++) {
+			//podríamos solicitar nombre del jugador, pero se ha automatizado para agilizar las pruebas
 			jugadores.add(new Jugador("jugador" + (i + 1)));
 		}
 	}
