@@ -1,4 +1,4 @@
-package sieteYmedia;
+ppackage sieteYmedia;
 
 import java.util.*;
 
@@ -106,8 +106,9 @@ public class TestJuegos {
 			System.out.println("saliendo");
 		}
 		System.out.println(participantes.toString());
-		partida = Partida.partidaNueva(participantes);
+		partida = new Partida(participantes);
 	}
 
 	
 }
+
