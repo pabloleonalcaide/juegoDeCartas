@@ -104,11 +104,11 @@ public class Partida {
 	 * @throws MazoVacioException
 	 */
 	private double takeCard() throws MazoVacioException {
-		if (baraja.mazo.isEmpty())
+		if (baraja.getMazo().isEmpty())
 			throw new MazoVacioException("Se vacio el mazo, lo siento");
 		Carta carta = baraja.extractCard();
 		System.out.println("Ha salido " + carta.toString());
-		double valor = carta.getFigura().getValor();
+		double valor = carta.getValor();
 		// carta mostrada, carta que sacamos del mazo
 		baraja.pullOut();
 		return valor;

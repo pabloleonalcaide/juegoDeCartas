@@ -20,7 +20,9 @@ public class Carta {
 	private void setPalo(Palos palo) {
 		this.palo = palo;
 	}
-
+	double getValor(){
+		return this.figura.getValor();
+	}
 	@Override
 	public String toString() {	
 		return figura + " de " + palo;
