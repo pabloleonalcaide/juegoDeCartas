@@ -1,12 +1,13 @@
 package sieteYmedia;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Baraja {
-	ArrayList<Carta> mazo;
+	private ArrayList<Carta> mazo;
 
 	Baraja() {
-		mazo = new ArrayList<Carta>();
+		setMazo(new ArrayList<Carta>());
 		generatePile();
 	}
 	/**
@@ -15,7 +16,7 @@ public class Baraja {
 	private void generatePile() {
 		for (Palos p : Palos.values()) {
 			for (Figuras f : Figuras.values()) {
-				mazo.add(new Carta(p, f));
+				getMazo().add(new Carta(p, f));
 			}
 		}
 	}
@@ -26,15 +27,25 @@ public class Baraja {
 	 * @return Carta
 	 */
 	Carta extractCard() {
-		return mazo.get(0);
+		return getMazo().get(0);
 	}
 
 	/**
 	 * elimina la primera carta
 	 */
 	void pullOut() {
-		mazo.remove(0);
+		getMazo().remove(0);
 
+	}
+	void shuffle() {
+		Collections.shuffle(getMazo());
+
+	}
+	ArrayList<Carta> getMazo() {
+		return mazo;
+	}
+	 void setMazo(ArrayList<Carta> mazo) {
+		this.mazo = mazo;
 	}
 
 }

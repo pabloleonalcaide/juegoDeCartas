@@ -16,8 +16,11 @@ public class TestJuegos {
 	private static Partida partida;
 	private static Menu menu = new Menu("Siete y Media", new String[] {
 			"jugar", "mostrar ranking" });
-	
+
 	public static void main(String[] args) {
+		// los jugadores se definen al inicio del programa y se mantienen hasta
+		// el final
+		// en este caso no se ha dado opcion a introducir o eliminar jugadores.
 		generateAllPlayers();
 		do {
 			switch (menu.gestionar()) {
@@ -44,27 +47,38 @@ public class TestJuegos {
 	 */
 	private static void ranking() {
 		Collections.sort(jugadores);
-		
+
 		for (Jugador jugador : jugadores) {
 			System.out.println(jugador);
 		}
-		}
+	}
 
 	/**
 	 * juega tres rondas con los jugadores que elija
-	 * @throws MazoVacioException 
+	 * 
+	 * @throws MazoVacioException
 	 */
 	private static void playRounds() throws MazoVacioException {
+		// al inicio de cada partida introducimos los participantes
 		generateActualPlayers();
 		int rounds;
 		do {
-			rounds = Teclado
-					.leerEntero("por favor, indica numero de rondas");
-		} while (rounds<1);
-		for (int i = 0; i <rounds ; i++) {
+			rounds = Teclado.leerEntero("por favor, indica numero de rondas");
+		} while (rounds < 1);
+		for (int i = 0; i < rounds; i++) {
 			System.out.println("ronda " + (i + 1));
 			partida.ronda();
-		}
+		}// reasignamos el numero de partidas jugadas y ganadas
+		givePoints();// vaciamos la lista de participantes cuando termina la
+						// partida
+		participantes = null;
+	}
+
+	/**
+	 * asigna la puntuación de los participantes de cada ronda a la lista
+	 * general de jugadores
+	 */
+	private static void givePoints() {
 		for (Jugador j : jugadores) {
 			for (Jugador p : participantes) {
 				if (j.equals(p)) {
@@ -73,7 +87,6 @@ public class TestJuegos {
 				}
 			}
 		}
-		participantes = null;
 	}
 
 	/**
@@ -84,6 +97,8 @@ public class TestJuegos {
 		int totalJugadores = Teclado
 				.leerEntero("indica total de jugadores, recuerda que no tienen por que jugar todos a la vez");
 		for (int i = 0; i < totalJugadores; i++) {
+			// podríamos solicitar nombre del jugador, pero se ha automatizado
+			// para agilizar las pruebas
 			jugadores.add(new Jugador("jugador" + (i + 1)));
 		}
 	}
@@ -99,15 +114,15 @@ public class TestJuegos {
 				opcion = Teclado
 						.leerEntero("indica que jugadores van a participar en esta ronda (pulsa 0 o "
 								+ (jugadores.size() + 1) + " para salir)");
-				if(!participantes.contains(jugadores.get(opcion-1)))
-				participantes.add(jugadores.get(opcion - 1));
-			} while (opcion > 0 || opcion > jugadores.size());
-		} catch (RuntimeException e) {
-			System.out.println("saliendo");
+				// Si ya está el jugador, no dejamos que vuelva a introducirlo
+				if (!participantes.contains(jugadores.get(opcion - 1)))
+					participantes.add(jugadores.get(opcion - 1));
+			} while (opcion < 0 || opcion < jugadores.size());
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("vamos a jugar");
 		}
 		System.out.println(participantes.toString());
-		partida = Partida.partidaNueva(participantes);
+		partida = new Partida(participantes);
 	}
 
-	
 }
