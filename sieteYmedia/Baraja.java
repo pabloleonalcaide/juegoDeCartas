@@ -27,16 +27,9 @@ public class Baraja {
 	 * @return Carta
 	 */
 	Carta extractCard() {
-		return getMazo().get(0);
+		return mazo.remove(0);
 	}
 
-	/**
-	 * elimina la primera carta
-	 */
-	void pullOut() {
-		getMazo().remove(0);
-
-	}
 	void shuffle() {
 		Collections.shuffle(getMazo());
 

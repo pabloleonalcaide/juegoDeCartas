@@ -15,57 +15,41 @@ public class Partida {
 
 	Partida(ArrayList<Jugador> participantes) {
 		this.participantes = participantes;
+		baraja = new Baraja();
+		baraja.shuffle();
 	}
 
 	/**
-	 * ejecuta cada ronda de la partida, comprobando quien gana en cada ronda,
-	 * al inicio de cada ronda se toma una nueva baraja, se mezcla y se van
-	 * eliminando las cartas jugadas
-	 * 
 	 * @throws MazoVacioException
 	 */
 	void ronda() throws MazoVacioException {
-		// cada vez que comienza la partida cogemos una baraja nueva y la
-		// barajamos
-		baraja = new Baraja();
-		baraja.shuffle();
-		int turno = 0, ganador = 0;
-		do {
-			System.out.println("Turno del jugador: "
-					+ participantes.get(turno).getAlias());
-			participantes.get(turno).roundPlayed();
-			// suma 1 a partidas jugadas
-			play(participantes.get(turno));
-			ganador = checkWinner(turno, ganador);
-			turno++;
-		} while (turno < participantes.size()
-				|| participantes.get(turno - 1).getPuntuacion() == SIETEYMEDIA);
-		participantes.get(ganador).winRound();
-		System.out.println("ganador: " + participantes.get(ganador));
-		resetpoints();
-	}
-
-	private void resetpoints() {
+		Jugador ganador = new Jugador("");
+		int turno = 0;
+		double[] puntuaciones = new double[participantes.size()];
 		for (Jugador jugador : participantes) {
-			jugador.resetPoints();
+			System.out.println("Turno del jugador: " + jugador.getAlias());
+			jugador.roundPlayed();
+			puntuaciones[turno++] = play();
 		}
+		ganador = checkround(puntuaciones, participantes);
+		System.out.println("ganador: " + ganador);
 
 	}
 
-	/**
-	 * 
-	 * @param turno
-	 * @param ganador
-	 * @return ganador jugador que vaya ganando la ronda en ese momento
-	 */
-	private int checkWinner(int turno, int ganador) {
-		if (participantes.get(turno).getPuntuacion() == SIETEYMEDIA)
-			ganador = turno;
-		else if (participantes.get(turno).getPuntuacion() < SIETEYMEDIA
-				&& participantes.get(turno).getPuntuacion() > participantes
-						.get(ganador).getPuntuacion())
-			ganador = turno;
+	private Jugador checkround(double[] puntuaciones, ArrayList<Jugador> participantes) {
+		Jugador ganador = null;
+		double puntosGanador = 0;
+		for (int i = 0; i < puntuaciones.length; i++) {
+			if (puntuaciones[i] > puntosGanador && puntuaciones[i] < SIETEYMEDIA) {
+				puntosGanador = puntuaciones[i];
+				ganador = participantes.get(i);
+				if (puntosGanador == SIETEYMEDIA) {
+					return ganador;
+				}
+			}
+		}
 		return ganador;
+
 	}
 
 	/**
@@ -73,28 +57,13 @@ public class Partida {
 	 * 
 	 * @throws MazoVacioException
 	 */
-	private void play(Jugador jugador) throws MazoVacioException {
+	private double play() throws MazoVacioException {
+		double puntuacion = 0;
 		do {
-			jugador.sumarPuntuacion(takeCard());
-			// saca una carta del montÃ³n, acumula puntos y quita la carta
-		} while (Teclado.deseaContinuar("desea otra carta? S - N")
-				&& checkPoints(jugador));
+			puntuacion += takeCard();
+		} while (Teclado.deseaContinuar("desea otra carta? S - N") && puntuacion < SIETEYMEDIA);
 
-	}
-
-	/**
-	 * comprueba si el jugador se ha pasado, si ha ganado o ninguna de ambas
-	 */
-	private boolean checkPoints(Jugador jugador) {
-		if (jugador.getPuntuacion() > SIETEYMEDIA) {
-			System.out.println("te has pasado");
-			return false;
-		} else if (jugador.getPuntuacion() == SIETEYMEDIA) {
-			System.out.println("Ganaste");
-			return false;
-		} else
-			System.out.println("puntuacion: " + jugador.getPuntuacion());
-		return true;
+		return puntuacion;
 	}
 
 	/**
@@ -107,12 +76,77 @@ public class Partida {
 		if (baraja.getMazo().isEmpty())
 			throw new MazoVacioException("Se vacio el mazo, lo siento");
 		Carta carta = baraja.extractCard();
+
 		System.out.println("Ha salido " + carta.toString());
 		double valor = carta.getValor();
-		// carta mostrada, carta que sacamos del mazo
-		baraja.pullOut();
+		if (carta.getValor() > SIETEYMEDIA)
+			System.out.println("perdiste");
+		if (carta.getValor() == SIETEYMEDIA)
+			System.out.println("ganaste!");
 		return valor;
 
+	}
+
+	void deletePlayer() {
+		for (Jugador j : TestJuegos.participantes)
+			System.out.println(j.toString());
+		try {
+			TestJuegos.participantes.remove(Teclado.leerEntero("introduce indice de jugador a eliminar"));
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("indice de jugador no valido");
+		}
+
+	}
+
+	/**
+	 * juega tres rondas con los jugadores que elija
+	 * 
+	 * @throws MazoVacioException
+	 */
+	void playRounds() throws MazoVacioException, SinJugadoresException {
+		if (participantes.size() == 0)
+			throw new SinJugadoresException("introduce jugadores para jugar");
+		int rounds;
+		do {
+			rounds = Teclado.leerEntero("por favor, indica numero de rondas");
+		} while (rounds < 1);
+		for (int i = 0; i < rounds; i++) {
+			System.out.println("ronda " + (i + 1));
+			ronda();
+		}
+	}
+
+	/**
+	 * Inicializa lista con el total de jugadores
+	 */
+	void generateAllPlayers() {
+		int totalJugadores = Teclado
+				.leerEntero("indica total de jugadores, recuerda que no tienen por que jugar todos a la vez");
+		for (int i = 0; i < totalJugadores; i++) {
+			// podríamos solicitar nombre del jugador, pero se ha automatizado
+			// para agilizar las pruebas
+			TestJuegos.jugadores.add(new Jugador("jugador" + (i + 1)));
+		}
+	}
+
+	/**
+	 * Inicializa lista con los jugadores que participan en la ronda
+	 */
+	void addPlayer() {
+		int opcion;
+		try {
+			System.out.println(TestJuegos.jugadores.toString());
+			do {
+				opcion = Teclado.leerEntero("indica que jugadores van a participar en esta ronda (pulsa 0 o "
+						+ (TestJuegos.jugadores.size() + 1) + " para salir)");
+				// Si ya está el jugador, no dejamos que vuelva a introducirlo
+				if (!TestJuegos.participantes.contains(TestJuegos.jugadores.get(opcion - 1)))
+					TestJuegos.participantes.add(TestJuegos.jugadores.get(opcion - 1));
+			} while (opcion < 0 || opcion < TestJuegos.jugadores.size());
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("vamos a jugar");
+		}
+		System.out.println(participantes.toString());
 	}
 
 }

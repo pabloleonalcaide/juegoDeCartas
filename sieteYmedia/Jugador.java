@@ -2,15 +2,8 @@ package sieteYmedia;
 
 public class Jugador implements Comparable <Jugador> {
 	private String alias;
-	private double puntuacion;
 	private int partidasJugadas;
 	private int partidasGanadas;
-	/*
-	 * Se me ocurre introducir la variable "saldo", para que los jugadores apuesten en cada ronda,
-	 * quien gane la ronda, se lleva la apuesta del resto de jugadores, de modo que los jugadores
-	 * no puedan participar si se quedan sin saldo.
-	 */
-	private int saldo=2000;
 	
 	public Jugador(String alias) {
 		setAlias(alias);
@@ -24,18 +17,6 @@ public class Jugador implements Comparable <Jugador> {
 		this.alias = alias;
 	}
 
-	double getPuntuacion() {
-		return puntuacion;
-	}
-
-	
-	private void setPuntuacion(double puntuacion) {
-		this.puntuacion = puntuacion;
-	}
-
-	void sumarPuntuacion(double puntuacion) {
-		this.puntuacion += puntuacion;
-	}
 
 	int getPartidasJugadas() {
 		return partidasJugadas;
@@ -92,10 +73,6 @@ public class Jugador implements Comparable <Jugador> {
 				+ partidasJugadas + ", partidasGanadas=" + partidasGanadas;
 	}
 
-	void resetPoints() {
-		setPuntuacion(0);
-
-	}
 	public int compareTo(Jugador jugador) {
 		int comparepg = ((Jugador)jugador).getPartidasGanadas();
 		return comparepg-this.partidasGanadas;
