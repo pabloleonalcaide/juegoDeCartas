@@ -37,7 +37,7 @@ public class TestJuegos {
 				}
 				break;
 			case 4:
-				ranking();
+				partida.ranking();
 				break;
 			case 5:
 				System.out.println("hasta luego");
@@ -45,18 +45,6 @@ public class TestJuegos {
 			}
 		} while (menu.getOpcion() < menu.getSALIR());
 
-	}
-
-
-	/**
-	 * muestra el ranking de jugadores
-	 */
-	private static void ranking() {
-		ArrayList<Jugador> ranking = (ArrayList<Jugador>) jugadores.clone();
-		Collections.sort(ranking);
-		for (Jugador jugador : ranking) {
-			System.out.println(jugador);
-		}
 	}
 
 }

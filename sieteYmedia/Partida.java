@@ -123,8 +123,6 @@ public class Partida {
 		int totalJugadores = Teclado
 				.leerEntero("indica total de jugadores, recuerda que no tienen por que jugar todos a la vez");
 		for (int i = 0; i < totalJugadores; i++) {
-			// podríamos solicitar nombre del jugador, pero se ha automatizado
-			// para agilizar las pruebas
 			TestJuegos.jugadores.add(new Jugador("jugador" + (i + 1)));
 		}
 	}
@@ -147,6 +145,17 @@ public class Partida {
 			System.out.println("vamos a jugar");
 		}
 		System.out.println(participantes.toString());
+	}
+
+	/**
+	 * muestra el ranking de jugadores
+	 */
+	void ranking() {
+		ArrayList<Jugador> ranking = (ArrayList<Jugador>) TestJuegos.jugadores.clone();
+		Collections.sort(ranking);
+		for (Jugador jugador : ranking) {
+			System.out.println(jugador);
+		}
 	}
 
 }
