@@ -11,14 +11,12 @@ import utiles.*;
  * @version 1.0
  */
 public class TestJuegos {
-	static ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 	static ArrayList<Jugador> participantes = new ArrayList<Jugador>();
 	private static Menu menu = new Menu("Siete y Media",
 			new String[] { "aniadir jugador", "borrar jugador", "jugar", "mostrar ranking" });
 
 	public static void main(String[] args) {
-		Partida partida=new Partida(participantes);
-		partida.generateAllPlayers();
+		Partida partida = new Partida(participantes);
 		do {
 			switch (menu.gestionar()) {
 			case 1:
