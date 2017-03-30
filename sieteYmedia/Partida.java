@@ -121,11 +121,12 @@ public class Partida {
 
 	/**
 	 * Inicializa lista con los jugadores que participan en la ronda
+	 * @throws JugadorExisteException 
 	 */
-	void addPlayer() {
-		// CORREGIR ESTE METODO, SE OCUPA DE INTRODUCIR UN JUGADOR A LA LISTA,
-		// COMPROBANDO QUE EL NOMBRE
-		// NO EXISTE YA
+	void addPlayer() throws JugadorExisteException {
+		Jugador jugador = new Jugador(Teclado.leerCadena("introduce nombre del jugador"));
+		if(participantes.contains(jugador)) throw new JugadorExisteException("ese jugador ya existe");
+		participantes.add(jugador);
 	}
 
 	/**
@@ -134,6 +135,7 @@ public class Partida {
 	void ranking() {
 		ArrayList<Jugador> ranking = (ArrayList<Jugador>) participantes.clone();
 		Collections.sort(ranking);
+		System.out.println("\n \t RANKING");
 		for (Jugador jugador : ranking) {
 			System.out.println(jugador);
 		}

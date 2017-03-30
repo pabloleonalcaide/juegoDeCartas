@@ -13,14 +13,18 @@ import utiles.*;
 public class TestJuegos {
 	static ArrayList<Jugador> participantes = new ArrayList<Jugador>();
 	private static Menu menu = new Menu("Siete y Media",
-			new String[] { "aniadir jugador", "borrar jugador", "jugar", "mostrar ranking" });
+			new String[] { "aniadir jugador", "borrar jugador", "jugar"});
 
 	public static void main(String[] args) {
 		Partida partida = new Partida(participantes);
 		do {
 			switch (menu.gestionar()) {
 			case 1:
-				partida.addPlayer();
+				try {
+					partida.addPlayer();
+				} catch (JugadorExisteException e1) {
+					System.out.println(e1.getMessage());
+				}
 				break;
 			case 2:
 				partida.deletePlayer();
@@ -33,8 +37,6 @@ public class TestJuegos {
 				} catch (SinJugadoresException e) {
 					System.out.println(e.getMessage());
 				}
-				break;
-			case 4:
 				partida.ranking();
 				break;
 			case 5:
