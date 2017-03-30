@@ -39,7 +39,7 @@ public class TestJuegos {
 				}
 				partida.ranking();
 				break;
-			case 5:
+			case 4:
 				System.out.println("hasta luego");
 				return;
 			}
