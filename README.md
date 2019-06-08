@@ -1,2 +1,3 @@
 # juegoDeCartas
-La rama principal aún tiene algunos errores, revisar rama correcciones.
+
+Juego de Cartas (7 y media) sin interfaz gráfica
